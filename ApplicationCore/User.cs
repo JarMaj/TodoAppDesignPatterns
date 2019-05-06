@@ -10,5 +10,7 @@ namespace ApplicationCore
         public Guid UserID { get; set; }
         public string UserName { get; set; }
 
+        public Guid Todo { get; set;}
+
     }
 }

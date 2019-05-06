@@ -11,13 +11,13 @@ using Web.ViewModels;
 
 namespace Web.Controllers
 {
-    [Route("v1/[controller]")]
+    [Route("todoapi")]
     public class TodoController : Controller
     {
-        private readonly TodoRepository _todoService;
-        public TodoController(TodoRepository todoRepository)
+        private readonly ITodoRepository _todoService;
+        public TodoController(ITodoRepository todoRepository)
         {
-            _todoService = todoRepository;
+            _todoService = todoRepository ?? throw new ArgumentNullException(nameof(todoRepository));
         }
 
         [HttpGet]
@@ -28,7 +28,7 @@ namespace Web.Controllers
             return Ok(allTodo);
         }
 
-        [HttpGet("{todo/userid}")]
+        [HttpGet("{todo}/userid")]
         [ProducesResponseType(typeof(List<TodoViewModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByUserIdAsync(Guid id)
