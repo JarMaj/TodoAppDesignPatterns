@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Infrastructure;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -13,7 +16,7 @@ namespace TodoSeviceTests
     public class TestInitializer
     {
         public static HttpClient TestHttpClient;
-       // public static Mock<IEmployeeRepository> MockEmployeeRepository;
+       public static Mock<ITodoRepository> MockTodoRepository;
 
         [AssemblyInitialize]
         public static void InitializeTestServer(TestContext testContext)
@@ -29,12 +32,12 @@ namespace TodoSeviceTests
             TestHttpClient = testServer.CreateClient();
         }
 
-        //public static void RegisterMockRepositories(IServiceCollection services)
-        //{
-        //    MockEmployeeRepository = (new Mock<IEmployeeRepository>());
-        //    services.AddSingleton(MockEmployeeRepository.Object);
+        public static void RegisterMockRepositories(IServiceCollection services)
+        {
+            MockTodoRepository = (new Mock<ITodoRepository>());
+            services.AddSingleton(MockTodoRepository.Object);
 
-        //    //add more mock repositories below
-        //}
+            //add more mock repositories below
+        }
     }
 }

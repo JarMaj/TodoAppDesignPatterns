@@ -49,10 +49,10 @@ namespace Web.Services
             _context.Dispose();
         }
 
-        public async Task<List<Todo>> GetAllAsync(CancellationToken ct = default(CancellationToken))
+        public async Task<List<Todo>> GetAllAsync()
         {
 
-            return await _context.Todos.ToListAsync(ct);
+            return await _context.Todos.ToListAsync();
         }
 
         public Task<List<Todo>> GetByUserIdAsync(Guid id, CancellationToken ct = default(CancellationToken))

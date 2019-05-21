@@ -49,16 +49,16 @@ namespace TodoSeviceTests
             mockTodo.Add(new Todo
             { TodoID = new Guid("0c7aa289-1225-4010-8f3c-c94dd299d016"), TodoName = "T2", QTasks = new List<QTask>(), User = new User { }, UserID = new Guid("87382ba5-ddcc-48b9-8818-08049f957821") });
 
-            //var todoRepositoryMock = TestInitializer.TodoRepository;
-            //todoRepositoryMock.Setup
-            //     (x => x.GetEmployees()).Returns(Task.FromResult(mockTodo));
+            var todoRepositoryMock = TestInitializer.MockTodoRepository;
+            todoRepositoryMock.Setup
+                 (x => x.GetAllAsync()).Returns(Task.FromResult(mockTodo));
 
             var response = TestInitializer.TestHttpClient.GetAsync("https://localhost:44326/todoapi").Result;
 
             var resp = response.Content.ReadAsStringAsync().Result;
             var responseData = JsonConvert.DeserializeObject<List<Todo>>(resp);
             Assert.AreEqual(3, responseData.Count);
-            //Assert.AreEqual(mockTodo[0].EmpId, responseData[0].EmpId);
+            Assert.AreEqual(mockTodo[0].TodoID, responseData[0].TodoID);
         }
     }
 }
